@@ -1,6 +1,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 from random import randint
+import re
 
 updater = Updater('TOKEN')
 dispatcher = updater.dispatcher
@@ -19,7 +20,7 @@ def echo_en(bot, update):
 	chat_id = message.chat_id
 	answer = ''
 
-	if message.text.lower().find('eric') > -1 or message.text.lower().find('erik') > -1 or message.text.lower().find('эрик') > -1:
+	if re.search(r'\b((e+r+i+(c+|k+|c+k+|c+h+|q+u+e+))|(э+р+и+к+\w*))\b', message.text.lower()) != None:
 		answer = 'He who must not be named...'
 	else:
 		value = randint(0, 19)
@@ -100,14 +101,14 @@ def echo_ru(bot, update):
 	chat_id = message.chat_id
 	answer = ''
 
-	if message.text.lower().find('уверен') > -1:
+	if re.search(r'\b((н+е+)* *(у+в+е+р+е+н+))\b', message.text.lower()) != None:
 		value = randint(0, 1)
 
 		if value == 0:
 			answer = 'Я уверен в этом.'
 		else:
 			answer = 'Я не уверен в этом.'
-	elif message.text.lower().find('эрик') > -1 or message.text.lower().find('eric') > -1 or message.text.lower().find('erik') > -1:
+	elif re.search(r'\b((e+r+i+(c+|k+|c+k+|c+h+|q+u+e+))|(э+р+и+к+\w*))\b', message.text.lower()) != None:
 		answer = 'Это тот, чьё имя нельзя называть...'
 	else:
 		value = randint(0, 19)
